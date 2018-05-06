@@ -14,7 +14,7 @@ end
 
 require 'puppet/util/feature'
 
-Puppet.features.add(:windows_env, libs: ['ffi'])
+Puppet.features.add(:windows_env, :libs => ['ffi'])
 
 if Puppet.version < '3.4.0'
   # This is the best pre-3.4.0 way to do unconditional cleanup for a provider.
@@ -40,9 +40,9 @@ end
 Puppet::Type.type(:windows_env).provide(:windows_env) do
   desc 'Manage Windows environment variables'
 
-  confine feature: :windows_env
-  confine osfamily: :windows
-  defaultfor osfamily: :windows
+  confine :feature => :windows_env
+  confine :osfamily => :windows
+  defaultfor :osfamily => :windows
 
   # For testing registry open result
   ERROR_FILE_NOT_FOUND = 2
@@ -140,7 +140,7 @@ Puppet::Type.type(:windows_env).provide(:windows_env) do
 
     @sep = @resource[:separator]
 
-    @reg_types = { REG_SZ: Win32::Registry::REG_SZ, REG_EXPAND_SZ: Win32::Registry::REG_EXPAND_SZ }
+    @reg_types = { :REG_SZ => Win32::Registry::REG_SZ, :REG_EXPAND_SZ => Win32::Registry::REG_EXPAND_SZ }
     @reg_type = @reg_types[@resource[:type]]
 
     begin
@@ -324,6 +324,6 @@ Puppet::Type.type(:windows_env).provide(:windows_env) do
       end
     end
 
-    self.class.loaded_hives << { user_sid: @user_sid, username: @resource[:user] }
+    self.class.loaded_hives << { :user_sid => @user_sid, :username => @resource[:user] }
   end
 end
